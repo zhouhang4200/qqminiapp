@@ -1,0 +1,38 @@
+
+娱乐全类目研究思路：
+首次直接抓取页面：https://m.v.qq.com/x/channel/video/recreation，提取里面的hide 样式标签 里面的pageContext和refreshContext属性，作为第一次请求的参数。
+
+第一次：
+https://m.v.qq.com/x/channel/video/recreation?pagelet=1&pageContext=score%253D%252B156274099501999&refreshContext=15627409950&request=hot_videoline
+
+第二次：
+https://m.v.qq.com/x/channel/video/recreation?pagelet=1&pageContext=score%253D%252B156274095011999&refreshContext=15627410880&request=hot_videoline
+
+第三次：
+https://m.v.qq.com/x/channel/video/recreation?pagelet=1&pageContext=score%253D-156274130410000&refreshContext=15627414470&request=hot_videoline
+
+第三次返回的数据包含：
+<div class=\"hide\">responsedata=/*{&quot;channelTag&quot;:&quot;recreation&quot;,&quot;pageContext&quot;:&quot;score&#x3D;-156274146910000&quot;,&quot;refreshContext&quot;:&quot;15627414690&quot;,&quot;hasNextPage&quot;:true}*/</div>
+解析为：
+responsedata=/*{"channelTag":"recreation","pageContext":"score=-156274146910000","refreshContext":"15627414690","hasNextPage":true}*/
+
+将第三次返回的数据作为参数 在第四次请求中使用
+第四次：{pageContext: "score%3D-156274146910000", refreshContext: "15627414690", request: "hot_videoline"}
+
+
+娱乐接口拼接：
+请求地址：https://m.v.qq.com/x/channel/video/recreation
+参数：pagelet=1&request=hot_videoline&pageContext=score%253D-156274146910000&refreshContext=15627414690
+即：https://m.v.qq.com/x/channel/video/recreation?pagelet=1&request=hot_videoline&pageContext=score%3D-156274146910000&refreshContext=15627414690
+
+
+
+
+
+
+
+
+
+
+
+
