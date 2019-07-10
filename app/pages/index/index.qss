@@ -1,0 +1,103 @@
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #aaa;
+}
+
+.usermotto {
+  margin-top: 200px;
+}
+.status-bar {
+  width: 100%;
+}
+.navbar {
+  width: 100%;
+  box-sizing: border-box;
+  position: fixed;
+  text-align: center;
+  font-size: 32rpx;
+  color: #fff;
+  height: 44px;
+}
+.navbar .search {
+  position: absolute;
+  top: 12px;
+  left: 35rpx;
+}
+.navbar .title {
+  line-height: 44px;
+  color: #000;
+}
+.navCate {
+  height: 70rpx;
+  border: 1px solid #edeff3;
+  width: 100%;
+  display: flex;
+}
+.navCate .left {
+  flex: 1;
+  height: 100%;
+  display: flex;
+}
+.navCate .cate {
+  flex: 1;
+  font-size: 26rpx;
+  color: #5e5e5e;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.navCate .cur {
+  color: #ff6525;
+  font-size: 34rpx;
+  font-weight: 600;
+}
+
+.navCate .right {
+  width: 93rpx;
+  height: 100%;
+  box-shadow: -1px 0px 5px #e9e9e9;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.navCate .right image {
+  width: 50rpx;
+  height: 50rpx;
+}
+.navSubCate {
+  height: 56rpx;
+  width: 100%;
+  white-space: nowrap;
+  /* clear: both; */
+}
+/* .navSubCate .box {
+  clear: both;
+  width:1000%;
+} */
+.navSubCate .subCate {
+  font-size: 22rpx;
+  padding: 0 13rpx;
+  height: 36rpx;
+  line-height: 36rpx;
+  margin: 10px 15rpx;
+  color: #939393;
+  display: inline-block;
+}
+
+.navSubCate .cur {
+  background-color: #ececec;
+  border-radius: 36rpx;
+}
