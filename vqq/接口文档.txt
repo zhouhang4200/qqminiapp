@@ -20,12 +20,21 @@ responsedata=/*{"channelTag":"recreation","pageContext":"score=-156274146910000"
 第四次：{pageContext: "score%3D-156274146910000", refreshContext: "15627414690", request: "hot_videoline"}
 
 
-娱乐接口拼接：
+娱乐接口拼接
 请求地址：https://m.v.qq.com/x/channel/video/recreation
 参数：pagelet=1&request=hot_videoline&pageContext=score%253D-156274146910000&refreshContext=15627414690
 即：https://m.v.qq.com/x/channel/video/recreation?pagelet=1&request=hot_videoline&pageContext=score%3D-156274146910000&refreshContext=15627414690
 
 
+
+游戏全类目研究思路：
+跟娱乐类类似
+页面地址：https://m.v.qq.com/x/channel/video/game
+
+游戏接口拼接
+请求地址:https://m.v.qq.com/x/channel/video/game
+参数：pagelet=1&pageContext=score%253D%252B156274433601999&refreshContext=15627443360&request=hot_videoline
+即：https://m.v.qq.com/x/channel/video/game?pagelet=1&pageContext=score%253D%252B156274433601999&refreshContext=15627443360&request=hot_videoline
 
 
 
