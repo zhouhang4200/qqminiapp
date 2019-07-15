@@ -221,13 +221,16 @@ Page({
           arr.unshift(child[0]);
           this.setNavData('gz', {
             children: arr
-          });
+          });          
+          if (arr.length > 1) {
+            this.bindOnceByWatch();
+          }
           this.updateNavCate();
         })
         .catch(err => console.log(err));
     }
   },
-  updateNavCate() {  
+  updateNavCate() {
     var gzCate = this.getNavData('gz');
     var subcur = gzCate.subcur;
     var isFixsubcur = false;
