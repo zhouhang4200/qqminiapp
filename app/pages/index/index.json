@@ -1,5 +1,7 @@
 {
   "usingComponents": {},
   "navigationStyle": "custom",
-  "navigationBarTitleText": "今日好看"
+  "navigationBarTitleText": "今日好看",
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 0
 }

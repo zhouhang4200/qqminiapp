@@ -13,28 +13,16 @@ module.exports = {
       app.globalData.userInfo = e.detail.userInfo;
     }
   },
-  // 当前用户授权登录
-  login(fn) {
-    qq.login({
-      success: res => {
-        if (res.code) {
-          axios.get({
-            url: '/login',
-            data: {
-              code: res.code
-            },
-            success(res) {
-              qq.setStorageSync('uuid', res.uuid);
-              fn && fn();
-            }
-          });
-        } else {
-          console.log('登录失败！' + res.errMsg);
-        }
-        console.log(res);
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      }
-    });
+  trim: function(str) {
+    return str.replace(/(^\s*)|(\s*$)/g, "")
+},
+  formatSS(a) {
+    var h = Math.floor(a / 3600);
+    var mm = Math.floor((a - h * 3600) / 60);
+    if (mm < 10) mm = '0' + mm;
+    var ss = Math.floor((a - h * 3600) % 60);
+    if (ss < 10) ss = '0' + ss;
+    return (h > 0 ? h + ':' : '') + mm + ':' + ss;
   },
   formatTime(date) {
     const year = date.getFullYear();

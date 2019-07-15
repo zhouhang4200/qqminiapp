@@ -1,46 +1,54 @@
 var axios = {
   isProxy: true,
   bastUrl: 'https://mini.adhei.com',
-  pbastUrl: 'https://easy-mock.com/mock/5d22efdb8ad5ce4c827aa874/miniapp_jrhk',
-  get(param) {
+  pbastUrl: 'http://api.miniapp.test/api',
+  get(uri, param) {
     var bastUrl = axios.bastUrl;
     if (axios.isProxy) {
       bastUrl = axios.pbastUrl;
     }
-    var url = bastUrl + param.url;
+    param = param || {};
+    var url = bastUrl + uri;
     var data = param.data || {};
-    var uuid = qq.getStorageSync('uuid');
-    if (!uuid) {
-      uuid = 1;
-      qq.setStorageSync('uuid', uuid);
+    var token = qq.getStorageSync('token');
+    if (token) {
+      data.token = token;
     }
-    data.uuid = uuid;
     qq.showLoading({
       title: '加载中'
     });
-    qq.request({
-      url: url, // 仅为示例，并非真实的接口地址
-      data: data,
-      method: param.method || 'GET',
-      dataType: param.dataType || 'json',
-      success(res) {
-        qq.hideLoading();
-        if (res.statusCode == 200) {
-          var data = res.data;
-          if (data.status == 'success') {
-            param.success(data.data);
+    return new Promise((resolve, reject) => {
+      qq.request({
+        url: url, // 仅为示例，并非真实的接口地址
+        data: data,
+        method: param.method || 'GET',
+        dataType: param.dataType || 'json',
+        success(res) {
+          qq.hideLoading();
+          if (res.statusCode == 200) {
+            var data = res.data;
+            if (data.status == 0) {
+              resolve(data.data);
+            } else {
+              reject(data.info);
+              axios.error(data.info);
+            }
           } else {
-            axios.error(data.info);
+            reject(res);
+            axios.error(res);
           }
-        } else {
-          axios.error(res);
+        },
+        fail(e) {
+          qq.hideLoading();
+          reject(e);
+          axios.error(e);
         }
-      }
+      });
     });
   },
-  post(param) {
+  post(uri, param) {
     param.method = 'POST';
-    axios.get(param);
+    return axios.get(uri, param);
   },
   error(e) {
     qq.showToast({
@@ -48,7 +56,6 @@ var axios = {
       icon: 'none',
       duration: 2000
     });
-    console.log(e);
   }
 };
 
