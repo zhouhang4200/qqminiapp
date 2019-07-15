@@ -1,0 +1,63 @@
+/* .log-list {
+  display: flex;
+  flex-direction: column;
+  padding: 40rpx;
+}
+.log-item {
+  margin: 10rpx;
+} */
+
+
+.watch-top {
+  border-bottom: 1px solid #edeff3;
+  height: 135rpx;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  padding:0 30rpx;
+}
+.watch-top .userinfo-avatar {
+  width: 98rpx;
+  height: 98rpx;
+  border-radius: 50%;
+}
+.watch-top .userinfo-nickname{
+  margin-left:32rpx;
+  color:#5e5e5e;
+  font-size:27rpx;  
+}
+
+.watch-main{
+  padding:0 30rpx;
+}
+.watch-item{
+  margin-top:70rpx;  
+
+}
+.item-top{
+  height:42rpx;
+}
+.cate-name{
+  font-size:30rpx;
+  color:#333333;
+}
+.watch-item.first{
+  margin-top:38rpx;
+}
+.item-btn{
+  margin:30rpx 30rpx 0 0;
+  width:210rpx;
+  text-align: center;
+  height:62rpx;
+  line-height: 62rpx;
+  color:#333333;
+  background-color: #f5f5f5;
+  font-size:25rpx; 
+  border-radius: 31rpx;
+  display:inline-block;
+
+}
+.item-btn.hover{
+  color:#ffffff;
+  background-color: #ff6525;  
+}

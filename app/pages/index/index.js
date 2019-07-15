@@ -12,12 +12,10 @@ Page({
     subcur: '',
     cateid: '',
     curdata: [],
-    motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
     showFeed: true,
     isOneByWatch: qq.getStorageSync('isOneByWatch'),
-    kandata: [],
     canIUse: qq.canIUse('button.open-type.getUserInfo')
   },
   bindGoTo(e) {
@@ -35,17 +33,9 @@ Page({
   bindNavCate(e) {
     var navtype = e.currentTarget.dataset.navtype;
     var cur = e.currentTarget.dataset.cur;
-    // 新手提示
-    if (cur == 'gz') {
-      var isOneByWatch = this.data.isOneByWatch;
-      if (!isOneByWatch) {
-        this.setData({
-          isOneByWatch: 1
-        });
-      }
-    }
     this.navCate(cur, navtype);
   },
+
   getNavData(id) {
     var res = {};
     this.data.navCate.forEach(item => {
@@ -102,14 +92,37 @@ Page({
         subcur: cateid
       });
     }
+    //如果数据有值，则直接显示
     if (item.curdata.length > 0) {
       this.setData({
         curdata: item.curdata,
         showFeed: true
       });
-    } else {
-      this.loadData('upper');
+      return false;
     }
+    // 关注需要做些特殊操作
+    if (navtype == 'cur' && cateid == 'gz') {
+      var isOneByWatch = this.data.isOneByWatch;
+      var hasUserInfo = this.data.hasUserInfo;
+      if (!isOneByWatch) {
+        // 开启关注新手引导
+        this.setData({
+          curdata: [],
+          showFeed: true,
+          isOneByWatch: 1
+        });
+        return false;
+      }
+      // 如果没有登录
+      if (!hasUserInfo) {
+        this.setData({
+          curdata: [],
+          showFeed: true
+        });
+        return false;
+      }
+    }
+    this.loadData('upper');
   },
   upper(e) {
     this.loadData('upper');
@@ -188,10 +201,10 @@ Page({
     var hasUserInfo = this.data.hasUserInfo;
     var isUpdateGZ = qq.getStorageSync('isUpdateGZ');
     if (hasUserInfo && isUpdateGZ == 1) {
-      qq.setStorageSync('isUpdateGZ', '');
       axios
         .get('/category/user')
         .then(res => {
+          qq.setStorageSync('isUpdateGZ', '');
           var arr = res.categories;
           var child = this.getNavData('gz').children;
           if (child.length > 1) {
@@ -209,8 +222,34 @@ Page({
           this.setNavData('gz', {
             children: arr
           });
+          this.updateNavCate();
         })
         .catch(err => console.log(err));
+    }
+  },
+  updateNavCate() {  
+    var gzCate = this.getNavData('gz');
+    var subcur = gzCate.subcur;
+    var isFixsubcur = false;
+    gzCate.children.forEach(c => {
+      if (c.id == subcur) {
+        isFixsubcur = true;
+      }
+    });
+    subcur = isFixsubcur ? subcur : 'gz';
+    this.setNavData('gz', {
+      subcur: subcur
+    });
+    if (this.data.cur == 'gz') {
+      // 更新关注二级菜单
+      this.setData({
+        cateid: subcur,
+        subcur: subcur,
+        navSubCate: gzCate.children
+      });
+      if (!isFixsubcur || this.data.curdata.length == 0) {
+        this.loadData('upper');
+      }
     }
   },
   fixCateData(res) {
@@ -273,6 +312,7 @@ Page({
     return data.length == 1 ? data[0] : {};
   },
   onLoad: function() {
+    //
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -300,11 +340,16 @@ Page({
         }
       });
     }
-    // this.loadUser();
+    app.userLoginCallback = () => {
+      this.loadUser();
+    };
     this.loadCate();
   },
-  onShow(e) {
-    console.log('onShow', e);
+  loadUser() {
+    this.updateGZ();
+  },
+  onShow() {
+    // 刷新关注
     this.loadGZ();
   },
   onHide(e) {
@@ -318,6 +363,7 @@ Page({
     // 当前用户未授权
     if (!e.detail.userInfo) return;
     app.globalData.userInfo = e.detail.userInfo;
+    app.login();
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true

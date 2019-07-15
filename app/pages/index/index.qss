@@ -82,7 +82,14 @@
   justify-content: space-around;
   align-items: center;
 }
-
+.navCate .right button{
+  padding:0;
+  border:none;
+  background-color: transparent;
+  border-radius: 0;
+  width: 50rpx;
+  height: 50rpx;
+}
 .navCate .right image {
   width: 50rpx;
   height: 50rpx;

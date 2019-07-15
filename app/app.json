@@ -1,6 +1,7 @@
 {
-  "pages":[
+  "pages":[    
     "pages/index/index",  
+    "pages/watch/watch",  
     "pages/detail/detail",             
     "pages/logs/logs"
   ],

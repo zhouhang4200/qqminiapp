@@ -1,7 +1,8 @@
 <view class="page">
   <view class="top">
     <view class="navbar" style="margin-top:{{statusBarHeight}}px;">
-      <icon class="search" type="search" size="20" color="#FF6525" bindtap="bindGoTo" data-path="/pages/detail/detail" />
+      <icon class="search" type="search" size="20" color="#FF6525" bindtap="bindGoTo"
+        data-path="/pages/detail/detail" />
       <view class="title">今日好看</view>
     </view>
     <view class="breadcrumb">
@@ -10,11 +11,18 @@
           <view bindtap="bindNavCate" data-navtype="cur" data-cur="{{item.id}}" class="cate {{cur==item.id?'cur':''}}"
             qq:for="{{navCate}}" qq:key="index">{{item.name}}</view>
         </view>
-        <view class="right" bindtap="bindGoTo" data-path="">
-          <image src="../../static/image/icon_cate.png"></image>
+        <view class="right">
+          <button qq:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+            <image src="../../static/image/icon_cate.png"></image>
+          </button>
+          <block qq:else>
+            <button bindtap="bindGoTo" data-path="/pages/watch/watch">
+              <image src="../../static/image/icon_cate.png"></image>
+            </button>
+          </block>
         </view>
       </view>
-      <scroll-view class="navSubCate" scroll-x={{true}} qq:if="{{navSubCate.length>1}}">
+      <scroll-view class="navSubCate" scroll-x={{true}}>
         <view bindtap="bindNavCate" data-navtype="subcur" data-cur="{{item.id}}"
           class="subCate {{subcur==item.id?'cur':''}}" qq:for="{{navSubCate}}" qq:key="index">{{item.name}}</view>
       </scroll-view>
@@ -54,7 +62,9 @@
       </view>
       <view class="watch-btn">
         <button wx:if="{{!hasUserInfo}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">去关注</button>
-        <button wx:if="{{hasUserInfo}}" bindtap="bindGoTo" data-path="">去关注</button>
+        <block qq:else>
+          <button bindtap="bindGoTo" data-path="/pages/watch/watch">去关注</button>
+        </block>
       </view>
     </view>
   </view>

@@ -61,6 +61,10 @@ App({
             })
             .then(res => {
               qq.setStorageSync('token', res);
+              //用户登录
+              if(this.userLoginCallback){
+                this.userLoginCallback();
+              }
               fn && fn();
             })
             .catch(err => console.log(err));
@@ -74,6 +78,7 @@ App({
   },
   globalData: {
     userInfo: null,
-    token: ''
+    token: '',
+    tjpage: 1
   }
 });

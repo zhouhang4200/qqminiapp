@@ -14,9 +14,12 @@ var axios = {
     if (token) {
       data.token = token;
     }
-    qq.showLoading({
-      title: '加载中'
-    });
+    param.showLoading = typeof param.showLoading === 'undefined' ? true : param.showLoading;
+    if (param.showLoading) {
+      qq.showLoading({
+        title: '加载中'
+      });
+    }
     return new Promise((resolve, reject) => {
       qq.request({
         url: url, // 仅为示例，并非真实的接口地址

@@ -70,10 +70,11 @@ Page({
               isMore: is
             });
           }
+
           this.setData({
             isError: is,
             cacheVal: inputVal,
-            searchdata: res.data
+            searchdata: this.fixData(res.data)
           });
           if (is) {
             this.loadData('upper');
@@ -129,7 +130,11 @@ Page({
     });
   },
   getcurdata(id) {
-    var data = this.data.curdata.filter(item => {
+    if (this.data.video.id == id) {
+      return this.data.video;
+    }
+
+    var data = this.data.searchdata.filter(item => {
       return item.id == id;
     });
     return data.length == 1 ? data[0] : {};
